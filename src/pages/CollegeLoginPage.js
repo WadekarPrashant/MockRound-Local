@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle login logic
-        console.log('Login submitted:', { email, password });
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            localStorage.setItem('token', response.data.token);
+            navigate('/college-profile');
+        } catch (error) {
+            console.error('Login error:', error);
+        }
     };
 
     return (
@@ -30,8 +37,8 @@ const Login = () => {
                 required
                 style={{ margin: '10px 0', padding: '10px' }}
             />
-            <button type="submit" style={{ margin: '20px 0', padding: '10px' }}>Login</button>
-            <Link to="/signup" style={{ textAlign: 'center', marginTop: '10px' }}>Don't have an account? Sign up</Link>
+             <button type="submit" style={{ margin: '20px 0', padding: '10px' }}>Login</button>
+            <Link to="/signup" style={{ margin: '10px 0', padding: '10px', textAlign: 'center' }}>Signup</Link>
         </form>
     );
 };

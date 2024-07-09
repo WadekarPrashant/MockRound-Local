@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle signup logic
-        console.log('Signup submitted:', { email, password, confirmPassword });
+        try {
+            const response = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+            localStorage.setItem('token', response.data.token);
+            navigate('/college-profile');
+        } catch (error) {
+            console.error('Signup error:', error);
+        }
     };
 
     return (
@@ -27,14 +34,6 @@ const Signup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter Password"
-                required
-                style={{ margin: '10px 0', padding: '10px' }}
-            />
-            <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm Password"
                 required
                 style={{ margin: '10px 0', padding: '10px' }}
             />
