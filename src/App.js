@@ -1,22 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CollegeSignupPage from './pages/CollegeSignupPage';
+import LoginPage from './pages/CollegeLoginPage';
 import CollegeProfile from './pages/CollegeProfile';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-    return (
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route exact path="/" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/college-profile" element={<ProtectedRoute element={<CollegeProfile />} />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<CollegeSignupPage />} />
+        <Route path="/login" element={<CollegeProfile />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
