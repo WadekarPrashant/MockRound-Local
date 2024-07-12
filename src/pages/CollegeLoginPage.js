@@ -27,7 +27,7 @@ const CollegeLoginPage = () => {
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('token', data.token); 
-                navigate('/profile'); 
+                navigate('/profile'); // Redirect to profile form page
             } else {
                 console.log('Login error');
             }
