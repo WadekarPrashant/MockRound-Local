@@ -23,13 +23,9 @@ const CollegeSignupPage = () => {
                 },
                 body: JSON.stringify(userData)
             });
-            console.log(response)
+
             if (response.ok) {
-                console.log("hiii")
-                const data = await response.json();
-                localStorage.setItem('token', data.token); 
-                navigate('/login');
-                console.log("bye")
+                navigate('/'); 
             } else {
                 console.log('Signup error');
             }
