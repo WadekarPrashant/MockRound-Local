@@ -1,18 +1,41 @@
-import React from 'react';
-import CollegeForm from '../components/CollegeForm';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
-const CollegeProfile = () => {
+const CollegeProfilePage = () => {
+    const [college, setCollege] = useState(null);
+
+    useEffect(() => {
+        const fetchCollege = async () => {
+            const token = localStorage.getItem('token');
+            const response = await fetch('http://localhost:5000/api/colleges/profile', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setCollege(data);
+            } else {
+                console.log('Failed to fetch college profile');
+            }
+        };
+
+        fetchCollege();
+    }, []);
+
+    if (!college) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h2>College Profile</h2>
-            <nav>
-                <Link to="/login" style={{ margin: '0 10px' }}>Login</Link>
-                <Link to="/signup" style={{ margin: '0 10px' }}>Signup</Link>
-            </nav>
-            <CollegeForm />
+        <div>
+            <h1>College Profile</h1>
+            <p>Name: {college.collegeName}</p>
+            <p>Email: {college.email}</p>
+            {/* Add more fields as necessary */}
         </div>
     );
 };
 
-export default CollegeProfile;
+export default CollegeProfilePage;
