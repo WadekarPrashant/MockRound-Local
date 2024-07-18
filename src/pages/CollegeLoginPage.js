@@ -11,8 +11,8 @@ const CollegeLoginPage = () => {
         event.preventDefault();
 
         const userData = {
-            email: email.trim(), 
-            password: password 
+            email: email.trim(),
+            password: password
         };
 
         try {
@@ -26,10 +26,12 @@ const CollegeLoginPage = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('token', data.token); 
+                localStorage.setItem('token', data.token);
                 navigate('/profile'); // Redirect to profile form page
             } else {
                 console.log('Login error');
+                const errorData = await response.json();
+                console.log(errorData);
             }
         } catch (error) {
             console.log('Login error:', error);
