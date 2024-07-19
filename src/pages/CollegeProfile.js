@@ -51,7 +51,7 @@ const CollegeProfilePage = () => {
 
     return (
         <div className="profile-container">
-            <h1>College Profile</h1>
+            <h1 style={{textAlign : "center"}}>College Profile</h1>
             <form onSubmit={handleSubmit} className="profile-form">
                 <input type="text" name="collegeName" value={college.collegeName} onChange={handleChange} placeholder="College Name" required />
                 <input type="text" name="address" value={college.address} onChange={handleChange} placeholder="Address" required />
